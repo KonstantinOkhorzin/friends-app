@@ -1,0 +1,14 @@
+.footer {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    &__messege {
+        color: $red-color;
+        border-radius: 10px;
+        padding: 0 5px; 
+        &:focus {
+            box-shadow: 0px 0px 10px 10px rgba($color: $red-color, $alpha: .5);          
+        }   
+    }
+}
