@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font-weight: 700;
+
+    &__btn {
+        border: 2px solid $red-color;
+        border-radius: 5px;
+        height: 30px;
+        color: $red-color;
+        padding: 0 15px;
+        transition: all .5s;
+        
+        &:active {
+            background-color: $red-color;
+            color: $black-color;
+        }
+
+        &:focus,
+        &:hover {
+            box-shadow: 0px 0px 10px 10px rgba($color: $red-color, $alpha: .5);
+        }
+    }
+}

@@ -85,8 +85,9 @@ a, button, input {
   padding: 10px;
   border-radius: 100%;
   background-color: #BF3807;
+  transition: all 0.5s;
 }
-.header__logo:focus {
+.header__logo:focus, .header__logo:hover {
   box-shadow: 0px 0px 20px 20px rgba(191, 56, 7, 0.5);
 }
 
@@ -97,32 +98,56 @@ a, button, input {
   flex: 1 1 auto;
 }
 
-.toolbar {
+.form {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
   font-weight: 700;
 }
+.form__btn {
+  border: 2px solid #BF3807;
+  border-radius: 5px;
+  height: 30px;
+  color: #BF3807;
+  padding: 0 15px;
+  transition: all 0.5s;
+}
+.form__btn:active {
+  background-color: #BF3807;
+  color: #030409;
+}
+.form__btn:focus, .form__btn:hover {
+  box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
+}
 
 .filter-gender {
   display: flex;
   gap: 5px;
 }
-.filter-gender__btn {
+.filter-gender__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.filter-gender__input:checked + .filter-gender__label {
+  background-color: #BF3807;
+  color: #030409;
+}
+.filter-gender__input:focus + .filter-gender__label, .filter-gender__input:hover + .filter-gender__label {
+  box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
+}
+.filter-gender__label {
   border: 2px solid #BF3807;
   border-radius: 5px;
   height: 30px;
   color: #BF3807;
-  padding: 0 20px;
+  padding: 0 15px;
   transition: all 0.5s;
-}
-.filter-gender__btn_active {
-  background-color: #BF3807;
-  color: #030409;
-}
-.filter-gender__btn:focus {
-  box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
+  display: flex;
+  align-items: center;
 }
 
 .filter-age {
@@ -153,83 +178,54 @@ a, button, input {
 .filter-age__input::placeholder {
   color: #BF3807;
 }
-.filter-age__input:focus {
+.filter-age__input:focus, .filter-age__input:hover {
   box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
 }
 
-.select {
-  width: 250px;
-  position: relative;
-}
-.select_active .select__body {
-  opacity: 1;
-  visibility: visible;
-}
-.select_active .select__header {
-  border-radius: 5px 5px 0 0;
-}
-.select_active .select__header::before {
-  transform: rotate(-180deg);
-}
-.select__header {
+.sort {
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 30px;
-  border: 2px solid #BF3807;
-  border-radius: 5px;
+  gap: 5px;
+}
+.sort__text {
   color: #BF3807;
-  padding-left: 10px;
+}
+.sort__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.sort__input:checked + .sort__label {
+  background-color: #BF3807;
+}
+.sort__input:checked + .sort__label .sort__svg path {
+  fill: #030409;
   transition: all 0.5s;
 }
-.select__header:focus {
+.sort__input:focus + .sort__label, .sort__input:hover + .sort__label {
   box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
 }
-.select__header:before {
-  content: "";
-  position: absolute;
-  right: 10px;
-  top: 9px;
+.sort__label {
   display: block;
-  width: 12px;
-  height: 12px;
-  background: url(../img/chevron-down-solid.svg) center center/cover no-repeat;
-  transform: rotate(0deg);
-  transition: all 0.3s;
-}
-.select__body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  border: 2px solid #BF3807;
-  border-radius: 0 0 5px 5px;
-  border-top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
-  background-color: #030409;
-}
-.select__item {
-  display: flex;
-  align-items: center;
+  width: 30px;
   height: 30px;
-  width: 100%;
-  color: #BF3807;
-  padding-left: 10px;
+  border-radius: 5px;
+  border: 2px solid #BF3807;
+  transition: all 0.5s;
 }
-.select__item:hover, .select__item:focus {
-  background-color: #BF3807;
-  color: #030409;
+.sort__svg {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .search {
   position: relative;
   height: 30px;
-  width: 250px;
+  width: 210px;
 }
 .search__input {
   width: 100%;
@@ -250,7 +246,7 @@ a, button, input {
 .search__input::placeholder {
   color: #BF3807;
 }
-.search__input:focus {
+.search__input:focus, .search__input:hover {
   box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
 }
 .search__btn {
@@ -289,6 +285,19 @@ a, button, input {
 .card__name {
   text-align: center;
 }
+.card__phone {
+  color: #BF3807;
+  position: relative;
+}
+.card__phone:focus:before, .card__phone:hover:before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #BF3807;
+}
 
 .footer {
   padding: 20px;
@@ -300,8 +309,9 @@ a, button, input {
   color: #BF3807;
   border-radius: 10px;
   padding: 0 5px;
+  transition: all 0.5s;
 }
-.footer__messege:focus {
+.footer__messege:focus, .footer__messege:hover {
   box-shadow: 0px 0px 10px 10px rgba(191, 56, 7, 0.5);
 }
 

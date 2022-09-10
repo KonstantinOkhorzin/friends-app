@@ -2,22 +2,29 @@
     display: flex;
     gap: 5px;
     
-
-    &__btn {
+    &__input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        &:checked + .filter-gender__label {
+            background-color: $red-color;
+            color: $black-color;
+        }
+        &:focus + .filter-gender__label,
+        &:hover + .filter-gender__label {
+            box-shadow: 0px 0px 10px 10px rgba($color: $red-color, $alpha: .5);
+        }
+    }
+    &__label {
         border: 2px solid $red-color;
         border-radius: 5px;
         height: 30px;
         color: $red-color;
-        padding: 0 20px;
+        padding: 0 15px;
         transition: all .5s;
-
-        &_active {
-            background-color: $red-color;
-            color: $black-color;
-        }
-
-        &:focus {
-            box-shadow: 0px 0px 10px 10px rgba($color: $red-color, $alpha: .5);
-        }
+        display: flex;
+        align-items: center;
     }
 }
