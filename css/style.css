@@ -92,10 +92,30 @@ a, button, input {
 }
 
 .container {
-  width: 1140px;
-  padding: 0 30px;
+  max-width: 1140px;
   margin: 0 auto;
   flex: 1 1 auto;
+}
+@media (max-width: 1200px) {
+  .container {
+    max-width: 940px;
+  }
+}
+@media (max-width: 992px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    max-width: 540px;
+  }
+}
+@media (max-width: 576px) {
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
 }
 
 .form {
@@ -104,6 +124,12 @@ a, button, input {
   justify-content: space-between;
   gap: 15px;
   font-weight: 700;
+}
+@media (max-width: 1200px) {
+  .form {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 .form__btn {
   border: 2px solid #BF3807;
@@ -148,6 +174,7 @@ a, button, input {
   transition: all 0.5s;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .filter-age {
@@ -214,6 +241,7 @@ a, button, input {
   border-radius: 5px;
   border: 2px solid #BF3807;
   transition: all 0.5s;
+  cursor: pointer;
 }
 .sort__svg {
   width: 100%;
@@ -226,6 +254,11 @@ a, button, input {
   position: relative;
   height: 30px;
   width: 210px;
+}
+@media (max-width: 425px) {
+  .search {
+    width: 100%;
+  }
 }
 .search__input {
   width: 100%;
@@ -268,6 +301,26 @@ a, button, input {
   justify-content: center;
   gap: 25px;
 }
+@media (max-width: 1200px) {
+  .list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (max-width: 992px) {
+  .list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 .card {
   display: flex;
@@ -281,6 +334,12 @@ a, button, input {
 }
 .card__img {
   border-radius: 100%;
+}
+@media (max-width: 425px) {
+  .card__img {
+    width: 100px;
+    height: 100px;
+  }
 }
 .card__name {
   text-align: center;

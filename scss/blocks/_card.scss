@@ -10,6 +10,10 @@
 
     &__img {
         border-radius: 100%;
+        @media (max-width: 425px) {
+            width: 100px;
+            height: 100px;
+        }
     }
 
     &__name {

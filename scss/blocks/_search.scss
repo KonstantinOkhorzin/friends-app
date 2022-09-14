@@ -2,6 +2,9 @@
     position: relative;
     height: 30px;
     width: 210px;
+    @media (max-width: 425px) {
+        width: 100%;
+    }
 
     &__input {
         width: 100%;
