@@ -19,7 +19,7 @@
             <form class="form">
                 <div class="filter-gender">
                     <div class="filter-gender__btn">
-                        <input class="filter-gender__input" id="all" type="radio" name="gender" value="all">
+                        <input class="filter-gender__input" id="all" type="radio" name="gender" value="all" checked>
                         <label class="filter-gender__label" for="all">All</label>
                     </div>
                     <div class="filter-gender__btn">
@@ -33,13 +33,13 @@
                 </div>
                 <div class="filter-age">
                     <span class="filter-age__text">Filter by age:</span>
-                    <input class="filter-age__input" type="tel" placeholder="min" maxlength="2">
-                    <input class="filter-age__input" type="tel" placeholder="max" maxlength="2">
+                    <input class="filter-age__input" type="tel" placeholder="min" maxlength="2" name="min-age">
+                    <input class="filter-age__input" type="tel" placeholder="max" maxlength="2" name="max-age">
                 </div>
                 <div class="sort">
                     <span class="sort__text">Sort by name:</span>
                     <div class="sort__btn">
-                        <input class="sort__input" id="a-z" type="radio" name="name" value="a-z">
+                        <input class="sort__input" id="a-z" type="radio" name="sort" value="a-z">
                         <label class="sort__label" for="a-z">
                             <svg class="sort__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
@@ -49,7 +49,7 @@
                         </label>
                     </div>
                     <div class="sort__btn">
-                        <input class="sort__input" id="z-a" type="radio" name="name" value="z-a">
+                        <input class="sort__input" id="z-a" type="radio" name="sort" value="z-a">
                         <label class="sort__label" for="z-a">
                             <svg class="sort__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
@@ -62,7 +62,7 @@
                 <div class="sort">
                     <span class="sort__text">Sort by age:</span>
                     <div class="sort__btn">
-                        <input class="sort__input" id="1-9" type="radio" name="age" value="1-9">
+                        <input class="sort__input" id="1-9" type="radio" name="sort" value="1-9">
                         <label class="sort__label" for="1-9">
                             <svg class="sort__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
@@ -72,7 +72,7 @@
                         </label>
                     </div>
                     <div class="sort__btn">
-                        <input class="sort__input" id="9-1" type="radio" name="age" value="9-1">
+                        <input class="sort__input" id="9-1" type="radio" name="sort" value="9-1">
                         <label class="sort__label" for="9-1">
                             <svg class="sort__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                 <path
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="search">
-                    <input class="search__input" type="text" placeholder="Search name...">
+                    <input class="search__input" type="text" placeholder="Search name..." name="search">
                     <button class="search__btn">
                         <img class='search__icon' src="img/search.svg" alt="">
                     </button>

@@ -2,8 +2,18 @@
 
 let friendsFromServer;
 let modifiedFriends;
-const url = 'https://randomuser.me/api/?results=10';
+const url = 'https://randomuser.me/api/?results=24';
 const listFriends = document.querySelector('.list');
+
+const state = {
+  search: '',
+  filter: {
+    gender: 'all',
+    minAge: 0,
+    maxAge: 0
+  },
+  sort: '',
+};
 
 //getResourse
 const message = {
@@ -74,54 +84,72 @@ const renderFriendsCards = (friends) => {
   });
 };
 
+function createFullName(firstName, lastName) {
+  return `${firstName} ${lastName}`.toLowerCase();
+}
 
-//search
 function searchName(friends) {
-  const searchInput = document.querySelector('.search__input');
-  const searchInputBtn = document.querySelector('.search__btn');
-  const btnIcon = document.querySelector('.search__icon')
-  const svgSearch = 'img/search.svg';
-  const svgReset = 'img/reset.svg';
+  return friends.filter(friend => createFullName(friend.name.first, friend.name.last).includes(state.search));
+}
 
+function filterByGender(friends) {
+  return friends.filter(friend => friend.gender === state.filter.gender);
+}
 
-  searchInput.addEventListener('input', () => {
-    searchInput.value = searchInput.value.replace(/[0-9]/g, '');
-    let inputValue = searchInput.value.trim().toLowerCase();
-    if (inputValue) {
-      let modifiedFriends = friends.filter(friend => {
-        const friendFullName = `${friend.name.first} ${friend.name.last}`.toLowerCase();
-        return friendFullName.includes(inputValue);
-      });
-      btnIcon.src = svgReset;
-      renderFriendsCards(modifiedFriends);
-    } else {
-      btnIcon.src = svgSearch;
-      renderFriendsCards(friends)
+function sortByName(friends) {
+  friends.sort((a, b) => createFullName(a.name.first, a.name.last).localeCompare(createFullName(b.name.first, b.name.last)));
+  return state.sort === 'a-z' ? friends : friends.reverse();
+}
+
+function sortByAge(friends) {
+  friends.sort((a, b) => a.dob.age - b.dob.age);
+  return state.sort === '1-9' ? friends : friends.reverse();
+}
+
+function bindEventListeners(friends) {
+  const form = document.querySelector('.form');
+  const resetForm = document.querySelector('.form__btn');
+
+  form.addEventListener('input', ({ target: { name, value } }) => {
+    if (name === 'search') {
+      state.search = value;
+    } else if (name === 'gender') {
+      state.filter.gender = value;
+    } else if (name === 'sort') {
+      state.sort = value;
     }
 
+    renderFriendsCards(getChosenFriends(friends));
   });
 
-  const resetSearchInput = (e) => {
-    e.preventDefault();
-    searchInput.value = '';
-    btnIcon.src = svgSearch;
-    renderFriendsCards(friends);
+  resetForm.addEventListener('click', () => renderFriendsCards(friends))
+}
+
+function getChosenFriends(friends) {
+  modifiedFriends = [...friends];
+
+  if (state.search) {
+    modifiedFriends = searchName(modifiedFriends);
   };
+  if (state.filter.gender !== 'all') {
+    modifiedFriends = filterByGender(modifiedFriends);
+  };
+  if (state.sort === '1-9' || state.sort === '9-1') {
+    modifiedFriends = sortByAge(modifiedFriends);
+  } else if (state.sort === 'a-z' || state.sort === 'z-a') {
+    modifiedFriends = sortByName(modifiedFriends);
+  }
 
-  searchInputBtn.addEventListener('click', resetSearchInput);
-
+  return modifiedFriends;
 }
 
-
-function initApp() {
+function friendsApp() {
   getResourse(url).then(dataFromServer => {
-    friendsFromServer = dataFromServer;
-    // modifiedFriends = [...friendsFromServer];
+    friendsFromServer = [...dataFromServer];
     renderFriendsCards(dataFromServer);
-    searchName(friendsFromServer);
+    bindEventListeners(friendsFromServer);
   })
-
 }
 
-initApp();
+friendsApp();
 
