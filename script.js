@@ -15,7 +15,6 @@ const state = {
   sort: '',
 };
 
-//getResourse
 const message = {
   loading: 'img/spinner.svg',
   failure: 'Failed to connect with the server! Please try later'
@@ -49,8 +48,6 @@ const getResourse = async (url) => {
   }
 };
 
-
-//Card
 class FriendCard {
   constructor(imgSrc, firstName, lastName, age, phone, parentElement) {
     this.imgSrc = imgSrc;
@@ -72,8 +69,7 @@ class FriendCard {
   }
 };
 
-//render cards
-const renderFriendsCards = (friends) => {
+function renderFriendsCards(friends) {
   listFriends.innerHTML = '';
   friends.map((friend) => {
     const { cell } = friend;
@@ -96,6 +92,14 @@ function filterByGender(friends) {
   return friends.filter(friend => friend.gender === state.filter.gender);
 }
 
+function filterByMinAge(friends) {
+  return friends.filter(friend => friend.dob.age >= state.filter.minAge);
+}
+
+function filterByMaxAge(friends) {
+  return friends.filter(friend => friend.dob.age <= state.filter.maxAge);
+}
+
 function sortByName(friends) {
   friends.sort((a, b) => createFullName(a.name.first, a.name.last).localeCompare(createFullName(b.name.first, b.name.last)));
   return state.sort === 'a-z' ? friends : friends.reverse();
@@ -106,23 +110,36 @@ function sortByAge(friends) {
   return state.sort === '1-9' ? friends : friends.reverse();
 }
 
+function resetForm (friends) {
+  state.search = '';
+  state.filter.gender = 'all';
+  state.filter.minAge = 0;
+  state.filter.maxAge = 0;
+  state.sort = '';
+  renderFriendsCards(friends);
+}
+
 function bindEventListeners(friends) {
   const form = document.querySelector('.form');
-  const resetForm = document.querySelector('.form__btn');
+  const formResetBtn = document.querySelector('.form__btn');
 
   form.addEventListener('input', ({ target: { name, value } }) => {
     if (name === 'search') {
-      state.search = value;
+      state.search = value.trim().toLowerCase();
     } else if (name === 'gender') {
       state.filter.gender = value;
     } else if (name === 'sort') {
       state.sort = value;
+    } else if (name === 'min-age') {
+      state.filter.minAge = +value;
+    } else if (name === 'max-age') {
+      state.filter.maxAge = +value;
     }
 
     renderFriendsCards(getChosenFriends(friends));
   });
 
-  resetForm.addEventListener('click', () => renderFriendsCards(friends))
+  formResetBtn.addEventListener('click', () => resetForm(friends));
 }
 
 function getChosenFriends(friends) {
@@ -138,6 +155,12 @@ function getChosenFriends(friends) {
     modifiedFriends = sortByAge(modifiedFriends);
   } else if (state.sort === 'a-z' || state.sort === 'z-a') {
     modifiedFriends = sortByName(modifiedFriends);
+  };
+  if (state.filter.minAge) {
+    modifiedFriends = filterByMinAge(modifiedFriends);
+  }
+  if (state.filter.maxAge && state.filter.maxAge > state.filter.minAge) {
+    modifiedFriends = filterByMaxAge(modifiedFriends);
   }
 
   return modifiedFriends;
@@ -152,4 +175,3 @@ function friendsApp() {
 }
 
 friendsApp();
-
