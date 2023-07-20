@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 let friendsFromServer;
 let modifiedFriends;
@@ -10,31 +10,35 @@ const state = {
   filter: {
     gender: 'all',
     minAge: 0,
-    maxAge: 0
+    maxAge: 0,
   },
   sort: '',
 };
 
 const message = {
   loading: 'img/spinner.svg',
-  failure: 'Failed to connect with the server! Please try later'
+  failure: 'Failed to connect with the server! Please try later',
 };
 
 const renderErrorMessage = (message, error) => {
-  listFriends.insertAdjacentHTML("beforebegin", `
+  listFriends.insertAdjacentHTML(
+    'beforebegin',
+    `
         <div class="status-message">
             <div class="status-message__title">${message}</div>
             <div class="status-message__descr">${error}</div>
         </div>
-    `);
+    `
+  );
 };
 
-const getResourse = async (url) => {
-
+const getResourse = async url => {
   const loading = document.createElement('div');
   loading.classList.add('status-message');
-  loading.insertAdjacentHTML('afterbegin',
-    `<img class='status-message__img' src=${message.loading} alt="">`);
+  loading.insertAdjacentHTML(
+    'afterbegin',
+    `<img class='status-message__img' src=${message.loading} alt="">`
+  );
   listFriends.before(loading);
 
   try {
@@ -42,7 +46,7 @@ const getResourse = async (url) => {
     const data = await response.json();
     return data.results;
   } catch (error) {
-    renderErrorMessage(message.failure, error)
+    renderErrorMessage(message.failure, error);
   } finally {
     loading.remove();
   }
@@ -59,26 +63,29 @@ class FriendCard {
     this.parent = parentElement;
   }
   render() {
-    this.parent.insertAdjacentHTML('beforeend', `
+    this.parent.insertAdjacentHTML(
+      'beforeend',
+      `
         <li class="card">
             <img class="card__img" src=${this.imgSrc} alt="">
             <div class="card__name">${this.name}</div>
             <div class="card__age">${this.age} years old</div>
             <a class="card__phone" href="tel:${this.phone}">${this.phone}</a>
-        </li>`);
+        </li>`
+    );
   }
-};
+}
 
 function renderFriendsCards(friends) {
   listFriends.innerHTML = '';
-  friends.map((friend) => {
+  friends.map(friend => {
     const { cell } = friend;
     const { first, last } = friend.name;
     const src = friend.picture.large;
     const age = friend.dob.age;
     new FriendCard(src, first, last, age, cell, listFriends).render();
   });
-};
+}
 
 function createFullName(firstName, lastName) {
   return `${firstName} ${lastName}`.toLowerCase();
@@ -86,7 +93,9 @@ function createFullName(firstName, lastName) {
 
 function searchName(friends) {
   // return friends.filter(friend => createFullName(friend.name.first, friend.name.last).includes(state.search));
-  return friends.filter(friend => createFullName(friend.name.first, friend.name.last).startsWith(state.search));
+  return friends.filter(friend =>
+    createFullName(friend.name.first, friend.name.last).startsWith(state.search)
+  );
 }
 
 function filterByGender(friends) {
@@ -102,7 +111,11 @@ function filterByMaxAge(friends) {
 }
 
 function sortByName(friends) {
-  friends.sort((a, b) => createFullName(a.name.first, a.name.last).localeCompare(createFullName(b.name.first, b.name.last)));
+  friends.sort((a, b) =>
+    createFullName(a.name.first, a.name.last).localeCompare(
+      createFullName(b.name.first, b.name.last)
+    )
+  );
   return state.sort === 'a-z' ? friends : friends.reverse();
 }
 
@@ -111,7 +124,7 @@ function sortByAge(friends) {
   return state.sort === '1-9' ? friends : friends.reverse();
 }
 
-function resetForm (friends) {
+function resetForm(friends) {
   state.search = '';
   state.filter.gender = 'all';
   state.filter.minAge = 0;
@@ -148,15 +161,15 @@ function getChosenFriends(friends) {
 
   if (state.search) {
     modifiedFriends = searchName(modifiedFriends);
-  };
+  }
   if (state.filter.gender !== 'all') {
     modifiedFriends = filterByGender(modifiedFriends);
-  };
+  }
   if (state.sort === '1-9' || state.sort === '9-1') {
     modifiedFriends = sortByAge(modifiedFriends);
   } else if (state.sort === 'a-z' || state.sort === 'z-a') {
     modifiedFriends = sortByName(modifiedFriends);
-  };
+  }
   if (state.filter.minAge) {
     modifiedFriends = filterByMinAge(modifiedFriends);
   }
@@ -172,7 +185,7 @@ function makeFriendsApp() {
     friendsFromServer = [...dataFromServer];
     renderFriendsCards(dataFromServer);
     bindEventListeners(friendsFromServer);
-  })
+  });
 }
 
 makeFriendsApp();
